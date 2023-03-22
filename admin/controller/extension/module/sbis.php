@@ -182,7 +182,7 @@ class ControllerExtensionModuleSbis extends Controller {
 		if (gettype($result) == 'string') {
 			$this->session->data['warning'] = $result;
 		} else {
-			$this->session->data['success'] = sprintf($this->language->get('text_import'), $result['new_products'], $result['new_categories']);
+			$this->session->data['success'] = sprintf($this->language->get('text_success_import'), $result['new_products'], $result['new_categories']);
 		}
 
 		$this->response->redirect($this->url->link('extension/module/sbis', 'user_token=' . $this->session->data['user_token'], true));

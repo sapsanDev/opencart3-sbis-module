@@ -213,8 +213,8 @@ class ControllerExtensionModuleSbis extends Controller {
 		foreach($products as $item) {
 			$alias = $this->model_catalog_sbis->getAlias($item['name']);
 
-			if (isset($item['images'])) {
-				$image = $this->sbis->saveImage($item['images'], $alias . '-' . $item['hierarchicalId']);
+			if (isset($item['images'])&& count($item['images']) > 0) {
+				$image = $this->sbis->saveImage($item['images'][0], $alias . '-' . $item['hierarchicalId']);
 			} else {
 				$image = '';
 			}
@@ -230,7 +230,6 @@ class ControllerExtensionModuleSbis extends Controller {
 					$product['product_image'] = $this->model_catalog_product->getProductImages($product['product_id']);
 					$product['product_option'] = $this->model_catalog_product->getProductOptions($product['product_id']);
 					$product['product_related'] = $this->model_catalog_product->getProductRelated($product['product_id']);
-					$product['product_related_article'] = $this->model_catalog_product->getArticleRelated($product['product_id']);
 					$product['product_reward'] = $this->model_catalog_product->getProductRewards($product['product_id']);
 					$product['product_special'] = $this->model_catalog_product->getProductSpecials($product['product_id']);
 					$product['product_category'] = $this->model_catalog_product->getProductCategories($product['product_id']);
@@ -241,7 +240,7 @@ class ControllerExtensionModuleSbis extends Controller {
 				}
 
 				foreach($languages as $language) {
-					$product['product_description'][$language['language_id']] = ['name' => $item['name'], 'meta_h1' => $item['name'], 'meta_title' => $item['name'], 'meta_description' => $item['description'], 'meta_keyword' => '', 'description' => $item['description'], 'tag' => ''];
+					$product['product_description'][$language['language_id']] = ['name' => $item['name'], 'meta_h1' => $item['name'], 'meta_title' => $item['name'], 'meta_description' => strip_tags($item['description']), 'meta_keyword' => '', 'description' => $item['description'], 'tag' => ''];
 				}
 
 				$product['model'] = $item['nomNumber'];
